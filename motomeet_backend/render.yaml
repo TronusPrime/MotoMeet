@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: motomeet-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python motomeet.py"
+    envVars:
+      - key: JWT_SECRET_KEY
+        value: your_jwt_secret
+      - key: DB_HOST
+        value: your-db-host
+      - key: DB_NAME
+        value: your-db-name
+      - key: DB_USER
+        value: your-db-user
+      - key: DB_PASSWORD
+        value: your-db-password
+      - key: DB_PORT
+        value: "5432"
+      - key: GOOGLE_MAPS_API_KEY
+        value: your-google-key
