@@ -291,29 +291,28 @@ def get_email_from_token():
         print("JWT error:", e)
         return None
 #Handles log ins
-@app.route('/api/login', methods=['POST', 'GET'])
+@app.route('/api/login', methods=['POST'])
 def login():
     print("WOW")
-    if request.method == "POST":
-        data = request.get_json()
-        email = data.get("email")
-        if not email:
-            return jsonify({"error": "Email is required"}), 400
-        pwd = data.get("pwd")
-        print("C")
-        if authenticate(email, pwd):
-            token = jwt.encode({"email": email, "exp": datetime.utcnow() + timedelta(hours=5)  # expires in 1 day
-            }, SECRET_KEY, algorithm="HS256")
-            print("WOW")
-            resp = make_response(jsonify({"message":"User Authenticated!"}))
-            resp.set_cookie(
-                "access_token", token,
-                httponly=True,
-                secure = True,
-                samesite = "Lax",
-                max_age=60*60
-            )
-            return resp
+    data = request.get_json()
+    email = data.get("email")
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+    pwd = data.get("pwd")
+    print("C")
+    if authenticate(email, pwd):
+        token = jwt.encode({"email": email, "exp": datetime.utcnow() + timedelta(hours=5)  # expires in 1 day
+        }, SECRET_KEY, algorithm="HS256")
+        print("WOW")
+        resp = make_response(jsonify({"message":"User Authenticated!"}))
+        resp.set_cookie(
+            "access_token", token,
+            httponly=True,
+            secure = True,
+            samesite = "Lax",
+            max_age=60*60
+        )
+        return resp
 @app.route('/api/home', methods=['GET', 'POST'])
 @cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app/"], supports_credentials=True)
 def events():
