@@ -87,7 +87,7 @@ def get_nearby_events(user_lat, user_lon, radius=80467):  # 50 miles in meters
 #TODO: See if i need to remove this
 @app.route('/')
 def main_page():
-    return render_template("main_page.html")
+    return jsonify({"status": "MotoMeet backend is running!"})
 
 @app.route('/test_db')
 def test_db():
