@@ -1,0 +1,20 @@
+# Frontend
+/motomeet-frontend/node_modules
+/motomeet-frontend/build
+/motomeet-frontend/.env
+/motomeet-frontend/.DS_Store
+
+# Backend (if applicable)
+/motomeet_backend/__pycache__/
+/motomeet_backend/venv
+/motomeet_backend/.env
+/motomeet_backend/.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs/editors
+.vscode/
+.idea/
