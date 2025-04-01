@@ -41,7 +41,9 @@ export default function AuthModal() {
         e.preventDefault();
         try {
             const API = process.env.REACT_APP_API_URL;
-            const res = await axios.post(`${API}/login`, {
+            console.log(API);
+
+            const res = await axios.post(`https://motomeet.onrender.com/api/login`, {
                 email: loginEmail,
                 pwd: loginPassword
             }, {
