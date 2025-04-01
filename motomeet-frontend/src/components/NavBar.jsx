@@ -8,7 +8,8 @@ export default function NavBar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/logout", {}, {
+      const API = process.env.REACT_APP_API_URL;
+      await axios.post(`${API}/logout`, {}, {
         withCredentials: true
       });
   

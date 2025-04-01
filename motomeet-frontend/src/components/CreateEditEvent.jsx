@@ -48,7 +48,8 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
             },
         };
         try {
-            const response = await axios.post("http://localhost:5000/api/autocomplete", requestBody);
+            const API = process.env.REACT_APP_API_URL;
+            const response = await axios.post(`${API}/autocomplete`, requestBody);
             setSuggestions(
                 response.data.suggestions.map((s) => s.placePrediction.text.text)
             );

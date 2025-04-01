@@ -24,7 +24,8 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/profile", {
+      const API = process.env.REACT_APP_API_URL;
+      const res = await axios.get(`${API}/profile`, {
         withCredentials: true
       });
       console.log(res)
@@ -39,7 +40,8 @@ export default function Profile() {
 
   const handleRSVP = async (eventId, state) => {
     try {
-      await axios.post("http://localhost:5000/api/home", {
+      const API = process.env.REACT_APP_API_URL;
+      await axios.post(`${API}/home`, {
         event_id: eventId,
         state
       }, {
@@ -60,7 +62,8 @@ export default function Profile() {
 
   const handleCancel = async (eventId) => {
     try {
-      await axios.post("http://localhost:5000/api/cancel_event", { event_id: eventId }, {
+      const API = process.env.REACT_APP_API_URL;
+      await axios.post(`${API}/cancel_event`, { event_id: eventId }, {
         withCredentials: true
       });
       await fetchProfile();
@@ -139,7 +142,8 @@ export default function Profile() {
               }}
               onSubmit={async (formData) => {
                 try {
-                  const geoResponse = await axios.post("http://localhost:5000/api/geocode", {
+                  const API = process.env.REACT_APP_API_URL;
+                  const geoResponse = await axios.post(`${API}/geocode`, {
                     address: formData.location
                   }, {
                     withCredentials: true
@@ -154,7 +158,8 @@ export default function Profile() {
 
                   if (formMode === "edit" && selectedEvent?.event_uuid) {
                     // 🔁 UPDATE existing event
-                    await axios.post("http://localhost:5000/api/update_event", {
+                    const API = process.env.REACT_APP_API_URL;
+                    await axios.post(`${API}/update_event`, {
                       ...eventPayload,
                       event_id: selectedEvent.event_uuid
                     }, {
@@ -162,16 +167,13 @@ export default function Profile() {
                     });
                   } else {
                     // ➕ CREATE new event
-                    await axios.post("http://localhost:5000/api/create_event", eventPayload, {
+                    const API = process.env.REACT_APP_API_URL;
+                    await axios.post(`${API}/create_event`, eventPayload, {
                       withCredentials: true
                     });
                   }
-
-                  const refreshed = await axios.get("http://localhost:5000/api/home", {
-                    withCredentials: true
-                  });
+                  const refreshed = await axios.get(`${API}/home`, { withCredentials: true });
                   
-
                   setEvents(refreshed.data.events);
 
                   setShowModal(false);

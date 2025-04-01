@@ -40,7 +40,8 @@ export default function AuthModal() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/api/login", {
+            const API = process.env.REACT_APP_API_URL;
+            const res = await axios.post(`${API}/login`, {
                 email: loginEmail,
                 pwd: loginPassword
             }, {
@@ -63,7 +64,9 @@ export default function AuthModal() {
         e.preventDefault();
         if (signupPassword === signupPasswordConfirm) {
             try {
-                const res = await axios.post("http://localhost:5000/api/signup", {
+                const API = process.env.REACT_APP_API_URL;
+                const res = await axios.post(`${API}/signup`, {
+                    
                     email: signupEmail,
                     pwd: signupPassword,
                     name: signupName,

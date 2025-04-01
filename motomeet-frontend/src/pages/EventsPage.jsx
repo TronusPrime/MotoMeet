@@ -20,7 +20,8 @@ export default function EventsPage() {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const res = await axios.get("http://localhost:5000/api/home", {
+            const API = process.env.REACT_APP_API_URL;
+            const res = await axios.get(`${API}/home`, {
               withCredentials: true,
             });
             setUser({
@@ -45,10 +46,11 @@ export default function EventsPage() {
 
     const handleCancel = async (eventId) => {
         try {
-            await axios.post("http://localhost:5000/api/cancel_event", { event_id: eventId }, {
+            const API = process.env.REACT_APP_API_URL;
+            await axios.post(`${API}/cancel_event`, { event_id: eventId }, {
                 withCredentials: true
             });
-            const refreshed = await axios.get("http://localhost:5000/api/home", {
+            const refreshed = await axios.get(`${API}/home`, {
                 withCredentials: true
             });
             setEvents(refreshed.data.events);
