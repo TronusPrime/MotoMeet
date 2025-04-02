@@ -216,8 +216,8 @@ export default function AuthModal() {
                                                 placeholder="Enter Make"
                                                 className="react-select-container mb-3"
                                                 classNamePrefix="react-select"
-                                                value={signupMake}
-                                                onChange={(e) => setSignUpMake(e.target.value)}
+                                                value={motorcycleOptions.find(opt => opt.value === signupMake)}
+                                                onChange={(selectedOption) => setSignUpMake(selectedOption?.value || "")}
                                                 menuPortalTarget={document.body} // 👈 makes dropdown render to <body>
                                                 styles={{
                                                     menuPortal: (base) => ({ ...base, zIndex: 9999 }),
