@@ -49,7 +49,7 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
         };
         try {
             const API = process.env.REACT_APP_API_URL;
-            const response = await axios.post(`${API}/autocomplete`, requestBody);
+            const response = await axios.post("https://motomeet.onrender.com/api/autocomplete", requestBody);
             setSuggestions(
                 response.data.suggestions.map((s) => s.placePrediction.text.text)
             );

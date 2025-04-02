@@ -25,7 +25,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     try {
       const API = process.env.REACT_APP_API_URL;
-      const res = await axios.get(`${API}/profile`, {
+      const res = await axios.get("https://motomeet.onrender.com/api/profile", {
         withCredentials: true
       });
       console.log(res)
@@ -41,7 +41,7 @@ export default function Profile() {
   const handleRSVP = async (eventId, state) => {
     try {
       const API = process.env.REACT_APP_API_URL;
-      await axios.post(`${API}/home`, {
+      await axios.post("https://motomeet.onrender.com/api/home", {
         event_id: eventId,
         state
       }, {
@@ -63,7 +63,7 @@ export default function Profile() {
   const handleCancel = async (eventId) => {
     try {
       const API = process.env.REACT_APP_API_URL;
-      await axios.post(`${API}/cancel_event`, { event_id: eventId }, {
+      await axios.post("https://motomeet.onrender.com/api/cancel_event", { event_id: eventId }, {
         withCredentials: true
       });
       await fetchProfile();
@@ -143,7 +143,7 @@ export default function Profile() {
               onSubmit={async (formData) => {
                 try {
                   const API = process.env.REACT_APP_API_URL;
-                  const geoResponse = await axios.post(`${API}/geocode`, {
+                  const geoResponse = await axios.post("https://motomeet.onrender.com/api/geocode", {
                     address: formData.location
                   }, {
                     withCredentials: true
@@ -159,7 +159,7 @@ export default function Profile() {
                   if (formMode === "edit" && selectedEvent?.event_uuid) {
                     // 🔁 UPDATE existing event
                     const API = process.env.REACT_APP_API_URL;
-                    await axios.post(`${API}/update_event`, {
+                    await axios.post("https://motomeet.onrender.com/api/update_event", {
                       ...eventPayload,
                       event_id: selectedEvent.event_uuid
                     }, {
@@ -168,7 +168,7 @@ export default function Profile() {
                   } else {
                     // ➕ CREATE new event
                     const API = process.env.REACT_APP_API_URL;
-                    await axios.post(`${API}/create_event`, eventPayload, {
+                    await axios.post("https://motomeet.onrender.com/api/create_event", eventPayload, {
                       withCredentials: true
                     });
                   }

@@ -21,7 +21,7 @@ export default function EventsPage() {
         const fetchData = async () => {
           try {
             const API = process.env.REACT_APP_API_URL;
-            const res = await axios.get(`${API}/home`, {
+            const res = await axios.get("https://motomeet.onrender.com/api/home", {
               withCredentials: true,
             });
             setUser({
@@ -47,7 +47,7 @@ export default function EventsPage() {
     const handleCancel = async (eventId) => {
         try {
             const API = process.env.REACT_APP_API_URL;
-            await axios.post(`${API}/cancel_event`, { event_id: eventId }, {
+            await axios.post("https://motomeet.onrender.com/api/cancel_event", { event_id: eventId }, {
                 withCredentials: true
             });
             const refreshed = await axios.get(`${API}/home`, {
@@ -62,7 +62,8 @@ export default function EventsPage() {
 
     const handleRSVP = async (eventId, state) => {
         try {
-            const res = await axios.post("http://localhost:5000/api/home", {
+            const API = process.env.REACT_APP_API_URL;
+            const res = await axios.post("https://motomeet.onrender.com/api/home", {
                 event_id: eventId,
                 state: state
             }, {
@@ -70,7 +71,7 @@ export default function EventsPage() {
             });
             console.log(res.data.message);
             console.log(res.data);
-            const refreshed = await axios.get("http://localhost:5000/api/home", {
+            const refreshed = await axios.get(`${API}/home`, {
                 withCredentials: true
             });
             setEvents(refreshed.data.events);
@@ -153,7 +154,8 @@ export default function EventsPage() {
                             }}
                             onSubmit={async (formData) => {
                                 try {
-                                    const geoResponse = await axios.post("http://localhost:5000/api/geocode", {
+                                    const API = process.env.REACT_APP_API_URL;
+                                    const geoResponse = await axios.post("https://motomeet.onrender.com/api/geocode", {
                                         address: formData.location
                                     }, {
                                         withCredentials: true
@@ -168,7 +170,8 @@ export default function EventsPage() {
 
                                     if (formMode === "edit" && selectedEvent?.event_uuid) {
                                         // 🔁 UPDATE existing event
-                                        await axios.post("http://localhost:5000/api/update_event", {
+                                        const API = process.env.REACT_APP_API_URL;
+                                        await axios.post("https://motomeet.onrender.com/api/update_event", {
                                             ...eventPayload,
                                             event_id: selectedEvent.event_uuid
                                         }, {
@@ -176,14 +179,12 @@ export default function EventsPage() {
                                         });
                                     } else {
                                         // ➕ CREATE new event
-                                        await axios.post("http://localhost:5000/api/create_event", eventPayload, {
+                                        const API = process.env.REACT_APP_API_URL;
+                                        await axios.post("https://motomeet.onrender.com/api/create_event", eventPayload, {
                                             withCredentials: true, // Only needed if using cookies (you may remove)
                                         });
                                     }
-
-                                    const refreshed = await axios.get("http://localhost:5000/api/home", {
-                                        withCredentials: true
-                                    });
+                                    const refreshed = await axios.get(`${API}/home`, { withCredentials: true });
 
                                     setEvents(refreshed.data.events);
                                     setEventsGoing(refreshed.data.events_going);

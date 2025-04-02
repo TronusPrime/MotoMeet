@@ -21,7 +21,8 @@ export default function LocationSetup() {
         if (!query) return;
 
         try {
-            const res = await axios.post("http://localhost:5000/api/autocomplete", {
+            const API = process.env.REACT_APP_API_URL;
+            const res = await axios.post("https://motomeet.onrender.com/api/autocomplete", {
                 input: query,
             }, {
                 withCredentials: true
@@ -44,7 +45,8 @@ export default function LocationSetup() {
         e.preventDefault();
 
         try {
-            const res = await axios.post("http://localhost:5000/api/set_location", {
+            const API = process.env.REACT_APP_API_URL;
+            const res = await axios.post("https://motomeet.onrender.com/api/set_location", {
                 city,
                 radius
               }, {

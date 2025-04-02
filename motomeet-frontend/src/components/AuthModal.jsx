@@ -67,7 +67,7 @@ export default function AuthModal() {
         if (signupPassword === signupPasswordConfirm) {
             try {
                 const API = process.env.REACT_APP_API_URL;
-                const res = await axios.post(`${API}/signup`, {
+                const res = await axios.post("https://motomeet.onrender.com/api/signup", {
                     
                     email: signupEmail,
                     pwd: signupPassword,
