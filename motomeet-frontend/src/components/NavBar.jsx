@@ -9,7 +9,7 @@ export default function NavBar() {
   const handleLogout = async () => {
     try {
       const API = process.env.REACT_APP_API_URL;
-      await axios.post(`${API}/logout`, {}, {
+      await axios.post("https://motomeet.onrender.com/api/logout", {}, {
         withCredentials: true
       });
   
@@ -27,11 +27,11 @@ export default function NavBar() {
     return (
       <nav className="bg-gradient-to-r from-purple-700 via-indigo-600 to-teal-400 text-white px-6 py-4 shadow-md flex items-center justify-between font-mono">
         <div className="flex gap-5 text-m">
-          <a href="/home" className="hover:text-purple-400 transition">Home</a>
+          <a href="/api/home" className="hover:text-purple-400 transition">Home</a>
           <a href="#news" className="hover:text-purple-400 transition">News</a>
           <a href="#contact" className="hover:text-purple-400 transition">Contact</a>
           <a href="#about" className="hover:text-purple-400 transition">About</a>
-          <a href="/profile" className="hover:text-purple-400 transition">Profile</a>
+          <a href="/api/profile" className="hover:text-purple-400 transition">Profile</a>
         </div>
         <button
           onClick={handleLogout}
