@@ -20,7 +20,7 @@ export default function UpdatesPage() {
           <div key={idx} className="mb-6">
             <h2 className="text-xl font-semibold">{update.title}</h2>
             <p className="text-sm text-gray-500 mb-2">{update.date}</p>
-            <p>{update.content}</p>
+            <p className='whitespace-pre-line'>{update.content}</p>
           </div>
         ))}
       </div>
