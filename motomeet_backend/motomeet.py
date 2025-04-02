@@ -77,7 +77,8 @@ def get_nearby_events(user_lat, user_lon, radius=80467):  # 50 miles in meters
         FROM events e
         JOIN users u ON e.host_email = u.email
         LEFT JOIN rsvps r ON e.event_uuid = r.event_id
-        WHERE ST_DistanceSphere(e.geom::geometry, ST_MakePoint(%s, %s)::geometry) <= %s
+        WHERE e.event_time >= NOW()
+        AND ST_DistanceSphere(e.geom::geometry, ST_MakePoint(%s, %s)::geometry) <= %s
         GROUP BY e.event_uuid, u.n
         ORDER BY e.event_time ASC;
     """
