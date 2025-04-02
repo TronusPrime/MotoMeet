@@ -6,7 +6,7 @@ export default function UpdatesPage() {
   const [updates, setUpdates] = useState([]);
 
   useEffect(() => {
-    axios.get("https://motomeet.onrender.com/api/updates")
+    axios.get("https://motomeet.onrender.com/api/news")
       .then(res => setUpdates(res.data))
       .catch(err => console.error("Failed to load updates", err));
   }, []);
