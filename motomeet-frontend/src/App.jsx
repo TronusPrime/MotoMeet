@@ -7,7 +7,7 @@ import EventsPage from "./pages/EventsPage";
 import { UserProvider } from "./context/UserContext";
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from "./pages/Profile";
-
+import UpdatesPage from './pages/News';
 export default function App() {
   return (
     <UserProvider>
@@ -15,6 +15,11 @@ export default function App() {
         <Route path="/home" element={
           <ProtectedRoute>
             <EventsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/news" element={
+          <ProtectedRoute>
+            <UpdatesPage />
           </ProtectedRoute>
         } />
         <Route path="/set_location" element={
