@@ -243,7 +243,7 @@ def set_location():
         return jsonify({"error": f"Request Error: {str(e)}"}), 500
 
 @app.route('/api/autocomplete', methods=['POST', 'OPTIONS'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz"], supports_credentials=True)
 @limiter.limit("30 per minute")
 def autocomplete_proxy():
     data = request.get_json()
@@ -318,7 +318,7 @@ def login():
         )
         return resp
 @app.route('/api/home', methods=['GET', 'POST'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz"], supports_credentials=True)
 def events():
     print("Check 1")
     # POST = RSVP or unRSVP
