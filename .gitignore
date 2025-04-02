@@ -4,6 +4,7 @@
 /motomeet-frontend/.env
 /motomeet-frontend/.DS_Store
 /motomeet-frontend/.env
+/motomeet-frontend/src/.env
 # Backend (if applicable)
 /motomeet_backend/__pycache__/
 /motomeet_backend/venv
