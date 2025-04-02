@@ -27,11 +27,11 @@ export default function NavBar() {
     return (
       <nav className="bg-gradient-to-r from-purple-700 via-indigo-600 to-teal-400 text-white px-6 py-4 shadow-md flex items-center justify-between font-mono">
         <div className="flex gap-5 text-m">
-          <a href="/api/home" className="hover:text-purple-400 transition">Home</a>
+          <a href="/home" className="hover:text-purple-400 transition">Home</a>
           <a href="#news" className="hover:text-purple-400 transition">News</a>
           <a href="#contact" className="hover:text-purple-400 transition">Contact</a>
           <a href="#about" className="hover:text-purple-400 transition">About</a>
-          <a href="/api/profile" className="hover:text-purple-400 transition">Profile</a>
+          <a href="/profile" className="hover:text-purple-400 transition">Profile</a>
         </div>
         <button
           onClick={handleLogout}
