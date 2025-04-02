@@ -313,7 +313,7 @@ def login():
             "access_token", token,
             httponly=True,
             secure = True,
-            samesite = "Lax",
+            samesite = "None",
             max_age=60*60
         )
         return resp
@@ -567,7 +567,7 @@ def logout():
         "access_token", "",      # Remove the token
         httponly=True,
         secure=True,
-        samesite="Lax",
+        samesite="None",
         max_age=0                # Expire immediately
     )
     return resp
