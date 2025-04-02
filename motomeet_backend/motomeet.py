@@ -21,7 +21,8 @@ GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:5173",
     "https://moto-meet.vercel.app",
-    "https://motomeet.xyz"
+    "https://motomeet.xyz",
+    "https://www.motomeet.xyz"
 ])
 app.config["SESSION_TYPE"] = "filesystem"  # Store sessions on the server
 limiter = Limiter(
@@ -243,7 +244,7 @@ def set_location():
         return jsonify({"error": f"Request Error: {str(e)}"}), 500
 
 @app.route('/api/autocomplete', methods=['POST', 'OPTIONS'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz", "https://www.motomeet.xyz"], supports_credentials=True)
 @limiter.limit("30 per minute")
 def autocomplete_proxy():
     data = request.get_json()
@@ -258,7 +259,7 @@ def autocomplete_proxy():
     )
     return jsonify(response.json())
 @app.route('/api/geocode', methods=['POST'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://www.motomeet.xyz"], supports_credentials=True)
 def geocode():
     data = request.get_json()
     address = data.get("address")
@@ -318,7 +319,7 @@ def login():
         )
         return resp
 @app.route('/api/home', methods=['GET', 'POST'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://motomeet.xyz", "https://www.motomeet.xyz"], supports_credentials=True)
 def events():
     print("Check 1")
     # POST = RSVP or unRSVP
@@ -437,7 +438,7 @@ def events():
 
 
 @app.route('/api/profile', methods=['GET','POST'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://www.motomeet.xyz"], supports_credentials=True)
 def user_profile():
     print("C1")
     email = get_email_from_token()
@@ -476,7 +477,7 @@ def user_profile():
         "model": data["model"]
     })
 @app.route('/api/verify', methods=['GET'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://www.motomeet.xyz"], supports_credentials=True)
 def verify_session():
     email = get_email_from_token()
     if email:
@@ -484,7 +485,7 @@ def verify_session():
     return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/api/create_event', methods=['POST'])
-@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173","https://moto-meet.vercel.app", "https://www.motomeet.xyz"], supports_credentials=True)
 @limiter.limit("3 per minute")
 def create_event():
     data = request.get_json()
