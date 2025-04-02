@@ -118,7 +118,7 @@ def signup():
     n = data.get("name")
     make = data.get("make")
     model = data.get("model")
-    email = get_email_from_token()
+    email = data.get("email")
     if not email:
         return jsonify({"error": "Email is required"}), 400
     pwd = data.get("pwd")
@@ -163,11 +163,19 @@ def signup():
             algorithm="HS256"
         )
 
-        return jsonify({
+        resp = make_response(jsonify({
             "message": "User created successfully",
-            "email": email,
-            "token": token
-        }), 200
+            "email": email
+        }))
+        resp.set_cookie(
+            "access_token", token,
+            httponly=True,
+            secure=True,
+            samesite="None",
+            max_age=60*60  # 1 hour
+        )
+        return resp
+
 
     except Exception as e:
         print(f"❌ Error during signup: {e}")
