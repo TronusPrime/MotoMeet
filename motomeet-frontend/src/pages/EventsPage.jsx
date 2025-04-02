@@ -50,7 +50,7 @@ export default function EventsPage() {
             await axios.post("https://motomeet.onrender.com/api/cancel_event", { event_id: eventId }, {
                 withCredentials: true
             });
-            const refreshed = await axios.get(`${API}/home`, {
+            const refreshed = await axios.get("https://motomeet.onrender.com/api/home", {
                 withCredentials: true
             });
             setEvents(refreshed.data.events);
