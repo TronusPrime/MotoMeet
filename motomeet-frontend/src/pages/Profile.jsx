@@ -172,7 +172,7 @@ export default function Profile() {
                       withCredentials: true
                     });
                   }
-                  const refreshed = await axios.get(`${API}/home`, { withCredentials: true });
+                  const refreshed = await axios.get("https://motomeet.onrender.com/api/home", { withCredentials: true });
                   
                   setEvents(refreshed.data.events);
 

@@ -48,10 +48,10 @@ export default function EventsPage() {
         try {
             const API = process.env.REACT_APP_API_URL;
             await axios.post("https://motomeet.onrender.com/api/cancel_event", { event_id: eventId }, {
-                withCredentials: true
+                withCredentials: true,
             });
             const refreshed = await axios.get("https://motomeet.onrender.com/api/home", {
-                withCredentials: true
+                withCredentials: true,
             });
             setEvents(refreshed.data.events);
             setEventsGoing(refreshed.data.events_going);
@@ -71,8 +71,8 @@ export default function EventsPage() {
             });
             console.log(res.data.message);
             console.log(res.data);
-            const refreshed = await axios.get(`${API}/home`, {
-                withCredentials: true
+            const refreshed = await axios.get("https://motomeet.onrender.com/api/home", {
+                withCredentials: true,
             });
             setEvents(refreshed.data.events);
             setEventsGoing(refreshed.data.events_going);
@@ -184,7 +184,7 @@ export default function EventsPage() {
                                             withCredentials: true, // Only needed if using cookies (you may remove)
                                         });
                                     }
-                                    const refreshed = await axios.get(`${API}/home`, { withCredentials: true });
+                                    const refreshed = await axios.get("https://motomeet.onrender.com/api/home", { withCredentials: true });
 
                                     setEvents(refreshed.data.events);
                                     setEventsGoing(refreshed.data.events_going);
