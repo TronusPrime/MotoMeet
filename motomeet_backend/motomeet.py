@@ -542,19 +542,21 @@ def create_event():
     print(new_event_uuid)
     return jsonify({"message": "Event created successfully!", "event_id": new_event_uuid}), 200
 
-@app.route("/api/news", methods = ["GET"])
+@app.route("/api/news", methods=["GET"])
 def news():
     updates = [
         {
             "title": "MotoMeet V1.0 Launch",
             "date": "2025-04-02",
-            "content": '''Hello everyone! This is the beta release of MotoMeet, a platform for bikers to schedule and find group meets and rides. 
-                        I made this after having so much trouble finding any meets after moving back home from university!
-                         So far, users can create and rsvp to events! 
-                         I'm going to release new features in the coming weeks, so stay tuned!
-                         - Sam'''
+            "content": (
+                "Hello everyone! This is the beta release of MotoMeet, a platform for bikers "
+                "to schedule and find group meets and rides. I made this after having so much trouble "
+                "finding any meets after moving back home from university! So far, users can create and RSVP "
+                "to events! I'm going to release new features in the coming weeks, so stay tuned! - Sam"
+            )
         }
     ]
+    return jsonify(updates), 200
 
 @app.route('/api/update_event', methods=['POST'])
 def update_event():
