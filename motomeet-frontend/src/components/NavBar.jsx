@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { use } from 'react';
 import { useUser } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 export default function NavBar() {
   const navigate = useNavigate();
   const { setUser } = useUser();
@@ -27,11 +27,11 @@ export default function NavBar() {
     return (
       <nav className="bg-gradient-to-r from-purple-700 via-indigo-600 to-teal-400 text-white px-6 py-4 shadow-md flex items-center justify-between font-mono">
         <div className="flex gap-5 text-m">
-          <a href="/home" className="hover:text-purple-400 transition">Home</a>
+          <Link to="/api/home" className="hover:text-purple-400 transition">Home</Link>
           <a href="#news" className="hover:text-purple-400 transition">News</a>
           <a href="#contact" className="hover:text-purple-400 transition">Contact</a>
           <a href="#about" className="hover:text-purple-400 transition">About</a>
-          <a href="/profile" className="hover:text-purple-400 transition">Profile</a>
+          <Link to="/api/profile" className="hover:text-purple-400 transition">Profile</Link>
         </div>
         <button
           onClick={handleLogout}
