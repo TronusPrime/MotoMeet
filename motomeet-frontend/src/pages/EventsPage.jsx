@@ -92,15 +92,23 @@ export default function EventsPage() {
         const sortType = e.target.value;
         setSortMethod(sortType);
       
-        const sorted = [...events].sort((a, b) => {
-          if (sortType === "most_rsvps") return b.rsvp_count - a.rsvp_count;
-          if (sortType === "least_rsvps") return a.rsvp_count - b.rsvp_count;
-          if (sortType === "closest") return a.distance - b.distance;
-          if (sortType === "upcoming") return new Date(a.event_time) - new Date(b.event_time); 
-        });
+        let sorted = [...events];
+      
+        if (sortType === "most_rsvps") {
+          sorted.sort((a, b) => b.rsvp_count - a.rsvp_count);
+        } else if (sortType === "least_rsvps") {
+          sorted.sort((a, b) => a.rsvp_count - b.rsvp_count);
+        } else if (sortType === "closest") {
+          sorted.sort((a, b) => a.distance - b.distance);
+        } else if (sortType === "upcoming") {
+          sorted.sort((a, b) =>
+            new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
+          );
+        }
       
         setSortedEvents(sorted);
       };
+      
       
 
     return (
