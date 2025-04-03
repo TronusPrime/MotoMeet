@@ -113,8 +113,12 @@ export default function EventsPage() {
                     <p className="text-gray-500">No events found within your selected radius.</p>
                 ) : (
                     
-                    events.filter((event) => !eventsGoing.includes(event.event_uuid))
-                    .map((event) => (
+                    events
+                    .filter(
+                      (event) =>
+                        !eventsGoing.includes(event.event_uuid) ||
+                        event.host_email === user.email
+                    )                    .map((event) => (
                         <EventCard
                             key={event.event_uuid}
                             event={event}
