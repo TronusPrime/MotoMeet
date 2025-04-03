@@ -133,7 +133,7 @@ export default function EventsPage() {
                         <button className="absolute top-2 right-3 text-2xl" onClick={() => setSelectedEvent(null)}>&times;</button>
                         <h2 className="text-xl font-bold mb-2">{selectedEvent.event_name}</h2>
                         <p><strong>Hosted by:</strong> {selectedEvent.host_name}</p>
-                        <p><strong>Time:</strong> {selectedEvent.event_time}</p>
+                        <p><strong>Time:</strong> {new Date(selectedEvent.event_time).toLocaleString()}</p>
                         <p><strong>Location:</strong> <a
                             href={`https://www.google.com/maps/search/?api=1&query=${selectedEvent.latitude},${selectedEvent.longitude}`}
                             target="_blank"
