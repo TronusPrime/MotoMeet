@@ -14,7 +14,7 @@ export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel,
 
       <p className="text-sm text-gray-700 mt-1">
         <strong>Time:</strong>{" "}
-        {new Date(event.event_time.replace("T", " ") + ":00").toLocaleString(undefined, {
+        {new Date(event.event_time.replace(" ", "T")).toLocaleString(undefined, {
           weekday: "short",
           month: "short",
           day: "numeric",
@@ -22,7 +22,6 @@ export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel,
           minute: "2-digit"
         })}
       </p>
-
       <p className="text-sm text-gray-700">
         <strong>Location:</strong> {event.location}
       </p>
