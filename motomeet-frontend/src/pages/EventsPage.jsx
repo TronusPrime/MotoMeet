@@ -15,6 +15,8 @@ export default function EventsPage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [formMode, setFormMode] = useState("create");
+    const [sortedEvents, setSortedEvents] = useState([]);
+    const [sortMethod, setSortMethod] = useState("upcoming");
     console.log("Work")
     const navigate = useNavigate();
     useEffect(() => {
@@ -32,6 +34,7 @@ export default function EventsPage() {
                 });
                 setEvents(res.data.events);
                 setEventsGoing(res.data.events_going);
+                handleSort({ target: { value: sortMethod } });
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setUser(null);
@@ -85,6 +88,20 @@ export default function EventsPage() {
         setSelectedEvent(event);
         setShowModal(true);
     };
+    const handleSort = (e) => {
+        const sortType = e.target.value;
+        setSortMethod(sortType);
+      
+        const sorted = [...events].sort((a, b) => {
+          if (sortType === "most_rsvps") return b.rsvp_count - a.rsvp_count;
+          if (sortType === "least_rsvps") return a.rsvp_count - b.rsvp_count;
+          if (sortType === "closest") return a.distance - b.distance;
+          return new Date(a.event_time) - new Date(b.event_time); // default: upcoming
+        });
+      
+        setSortedEvents(sorted);
+      };
+      
 
     return (
         <div className="min-h-screen bg-gray-100 font-mono px-4">
@@ -108,28 +125,33 @@ export default function EventsPage() {
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl">Events within {user.radius} miles near {user.city}</h2>
                 </div>
-
+                <select onChange={handleSort}>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="most_rsvps">Most RSVPs</option>
+                    <option value="least_rsvps">Least RSVPs</option>
+                    <option value="closest">Closest</option>
+                </select>
                 {events.length === 0 ? (
                     <p className="text-gray-500">No events found within your selected radius.</p>
                 ) : (
-                    
-                    events
-                    .filter(
-                      (event) =>
-                        !eventsGoing.includes(event.event_uuid) ||
-                        event.host_email === user.email
-                    )                    .map((event) => (
-                        <EventCard
-                            key={event.event_uuid}
-                            event={event}
-                            userEmail={user.email}
-                            isGoing={eventsGoing.includes(event.event_uuid)}
-                            onRSVP={handleRSVP}
-                            onCancel={() => handleCancel(event.event_uuid)}
-                            onEdit={handleEdit}
-                            onSeeMore={setSelectedEvent}
-                        />
-                    ))
+
+                    sortedEvents
+                        .filter(
+                            (event) =>
+                                !eventsGoing.includes(event.event_uuid) ||
+                                event.host_email === user.email
+                        ).map((event) => (
+                            <EventCard
+                                key={event.event_uuid}
+                                event={event}
+                                userEmail={user.email}
+                                isGoing={eventsGoing.includes(event.event_uuid)}
+                                onRSVP={handleRSVP}
+                                onCancel={() => handleCancel(event.event_uuid)}
+                                onEdit={handleEdit}
+                                onSeeMore={setSelectedEvent}
+                            />
+                        ))
                 )}
             </div>
 
