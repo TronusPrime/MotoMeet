@@ -13,7 +13,7 @@ export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel,
         </div>
   
         <p className="text-sm text-gray-700 mt-1">
-          <strong>Time:</strong> {event.event_time}
+          <strong>Time:</strong> {new Date(event.event_time).toLocaleString()}
         </p>
         <p className="text-sm text-gray-700">
           <strong>Location:</strong> {event.location}
