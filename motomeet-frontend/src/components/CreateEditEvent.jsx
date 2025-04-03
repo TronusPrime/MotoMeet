@@ -22,8 +22,7 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const localDate = new Date(datetime);
-        const utcDateString = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+        const utcDateString = new Date(datetime).toISOString();
 
         const formData = {
             event_name: eventName,
