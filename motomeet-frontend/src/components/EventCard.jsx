@@ -1,7 +1,17 @@
 import React from 'react';
+function parsePostgresTimestampToLocal(str) {
+  const [datePart, timePart] = str.split(" ");
+  const [year, month, day] = datePart.split("-").map(Number);
+  const [hour, minute, second] = timePart.split(":").map(Number);
+
+  // Month is 0-indexed in JS (Jan = 0, Feb = 1, ...)
+  return new Date(year, month - 1, day, hour, minute, second);
+}
+
 
 export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel, onEdit, onSeeMore }) {
   const isHost = event.host_email === userEmail;
+
 
   return (
     <div className="bg-gray-50 p-4 mb-4 rounded shadow-sm">
@@ -11,10 +21,9 @@ export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel,
           <p className="text-sm text-gray-600">{event.rsvp_count} going</p>
         )}
       </div>
-
       <p className="text-sm text-gray-700 mt-1">
         <strong>Time:</strong>{" "}
-        {new Date(event.event_time.replace(" ", "T")).toLocaleString(undefined, {
+        {parsePostgresTimestampToLocal(event.event_time).toLocaleString(undefined, {
           weekday: "short",
           month: "short",
           day: "numeric",
@@ -22,6 +31,7 @@ export default function EventCard({ event, userEmail, isGoing, onRSVP, onCancel,
           minute: "2-digit"
         })}
       </p>
+
       <p className="text-sm text-gray-700">
         <strong>Location:</strong> {event.location}
       </p>
