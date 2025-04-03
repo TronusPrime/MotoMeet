@@ -96,7 +96,7 @@ export default function EventsPage() {
           if (sortType === "most_rsvps") return b.rsvp_count - a.rsvp_count;
           if (sortType === "least_rsvps") return a.rsvp_count - b.rsvp_count;
           if (sortType === "closest") return a.distance - b.distance;
-          return new Date(a.event_time) - new Date(b.event_time); // default: upcoming
+          if (sortType === "upcoming") return new Date(a.event_time) - new Date(b.event_time); // default: upcoming
         });
       
         setSortedEvents(sorted);
