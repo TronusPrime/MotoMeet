@@ -19,29 +19,29 @@ export default function EventsPage() {
     const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const API = process.env.REACT_APP_API_URL;
-            const res = await axios.get("https://motomeet.onrender.com/api/home", {
-              withCredentials: true,
-            });
-            setUser({
-              name: res.data.n,
-              email: res.data.email,
-              city: res.data.city,
-              radius: res.data.radius,
-            });
-            setEvents(res.data.events);
-            setEventsGoing(res.data.events_going);
-          } catch (err) {
-            if (err.response && err.response.status === 401) {
-              setUser(null);
-              navigate("/", { replace: true });
+            try {
+                const API = process.env.REACT_APP_API_URL;
+                const res = await axios.get("https://motomeet.onrender.com/api/home", {
+                    withCredentials: true,
+                });
+                setUser({
+                    name: res.data.n,
+                    email: res.data.email,
+                    city: res.data.city,
+                    radius: res.data.radius,
+                });
+                setEvents(res.data.events);
+                setEventsGoing(res.data.events_going);
+            } catch (err) {
+                if (err.response && err.response.status === 401) {
+                    setUser(null);
+                    navigate("/", { replace: true });
+                }
             }
-          }
         };
         fetchData();
-      }, []);
-      
+    }, []);
+
 
     const handleCancel = async (eventId) => {
         try {
@@ -134,7 +134,13 @@ export default function EventsPage() {
                         <h2 className="text-xl font-bold mb-2">{selectedEvent.event_name}</h2>
                         <p><strong>Hosted by:</strong> {selectedEvent.host_name}</p>
                         <p><strong>Time:</strong> {selectedEvent.event_time}</p>
-                        <p><strong>Location:</strong> {selectedEvent.location}</p>
+                        <p><strong>Location:</strong> <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${selectedEvent.latitude},${selectedEvent.longitude}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {selectedEvent.location}</a>
+                        </p>
                         <p><strong>Info:</strong> {selectedEvent.description}</p>
                     </div>
                 </div>
@@ -174,7 +180,7 @@ export default function EventsPage() {
                                             ...eventPayload,
                                             event_id: selectedEvent.event_uuid
                                         }, {
-                                            withCredentials:true
+                                            withCredentials: true
                                         });
                                     } else {
                                         // ➕ CREATE new event
