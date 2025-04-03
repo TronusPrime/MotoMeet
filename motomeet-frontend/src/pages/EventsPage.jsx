@@ -35,22 +35,10 @@ export default function EventsPage() {
                 const fetchedEvents = res.data.events;
                 setEvents(fetchedEvents);
                 setEventsGoing(res.data.events_going);
-                
-                // ✅ Run sort *after* setting
-                let sorted = [...fetchedEvents];
-                if (sortMethod === "most_rsvps") {
-                  sorted.sort((a, b) => b.rsvp_count - a.rsvp_count);
-                } else if (sortMethod === "least_rsvps") {
-                  sorted.sort((a, b) => a.rsvp_count - b.rsvp_count);
-                } else if (sortMethod === "closest") {
-                  sorted.sort((a, b) => a.distance - b.distance);
-                } else if (sortMethod === "upcoming") {
-                  sorted.sort((a, b) =>
-                    new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
-                  );
-                }
-                setSortedEvents(sorted);
-                
+
+                setSortedEvents(sortEvents(fetchedEvents, sortMethod, res.data.email));
+
+
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setUser(null);
@@ -104,28 +92,33 @@ export default function EventsPage() {
         setSelectedEvent(event);
         setShowModal(true);
     };
+    const sortEvents = (eventsList, method, userEmail) => {
+        const createdEvents = eventsList.filter(e => e.host_email === userEmail);
+        const otherEvents = eventsList.filter(e => e.host_email !== userEmail);
+
+        let sortedOthers = [...otherEvents];
+
+        if (method === "most_rsvps") {
+            sortedOthers.sort((a, b) => b.rsvp_count - a.rsvp_count);
+        } else if (method === "least_rsvps") {
+            sortedOthers.sort((a, b) => a.rsvp_count - b.rsvp_count);
+        } else if (method === "closest") {
+            sortedOthers.sort((a, b) => a.distance - b.distance);
+        } else if (method === "upcoming") {
+            sortedOthers.sort((a, b) =>
+                new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
+            );
+        }
+
+        return [...createdEvents, ...sortedOthers];
+    };
+
     const handleSort = (e) => {
         const sortType = e.target.value;
-        setSortMethod(sortType);
-      
-        let sorted = [...events];
-      
-        if (sortType === "most_rsvps") {
-          sorted.sort((a, b) => b.rsvp_count - a.rsvp_count);
-        } else if (sortType === "least_rsvps") {
-          sorted.sort((a, b) => a.rsvp_count - b.rsvp_count);
-        } else if (sortType === "closest") {
-          sorted.sort((a, b) => a.distance - b.distance);
-        } else if (sortType === "upcoming") {
-          sorted.sort((a, b) =>
-            new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
-          );
-        }
-      
-        setSortedEvents(sorted);
-      };
-      
-      
+        setSortedEvents(sortEvents(events, sortType, user.email));
+    };
+
+
 
     return (
         <div className="min-h-screen bg-gray-100 font-mono px-4">
