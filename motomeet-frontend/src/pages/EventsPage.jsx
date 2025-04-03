@@ -32,9 +32,25 @@ export default function EventsPage() {
                     city: res.data.city,
                     radius: res.data.radius,
                 });
-                setEvents(res.data.events);
+                const fetchedEvents = res.data.events;
+                setEvents(fetchedEvents);
                 setEventsGoing(res.data.events_going);
-                handleSort({ target: { value: sortMethod } });
+                
+                // ✅ Run sort *after* setting
+                let sorted = [...fetchedEvents];
+                if (sortMethod === "most_rsvps") {
+                  sorted.sort((a, b) => b.rsvp_count - a.rsvp_count);
+                } else if (sortMethod === "least_rsvps") {
+                  sorted.sort((a, b) => a.rsvp_count - b.rsvp_count);
+                } else if (sortMethod === "closest") {
+                  sorted.sort((a, b) => a.distance - b.distance);
+                } else if (sortMethod === "upcoming") {
+                  sorted.sort((a, b) =>
+                    new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
+                  );
+                }
+                setSortedEvents(sorted);
+                
             } catch (err) {
                 if (err.response && err.response.status === 401) {
                     setUser(null);
