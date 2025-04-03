@@ -6,10 +6,10 @@ axios.defaults.withCredentials = true;
 const debounce = (func, delay) => {
     let timer;
     return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => func(...args), delay);
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
     };
-  };
+};
 
 export default function CreateEditEvent({ formMode, initialValues = {}, onClose, onSubmit }) {
     const [eventName, setEventName] = useState(initialValues.event_name || "");
@@ -18,11 +18,19 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
     const [description, setDescription] = useState(initialValues.description || "");
     const [suggestions, setSuggestions] = useState([]);
     const dropdownRef = useRef(null);
-      
-    
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = { event_name: eventName, event_time: datetime, location, description };
+        const localDate = new Date(datetime);
+        const utcDateString = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+
+        const formData = {
+            event_name: eventName,
+            event_time: utcDateString,
+            location,
+            description
+        };
         onSubmit(formData); // Pass data up to parent
         setSuggestions([]);
     };
@@ -60,7 +68,7 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
     const debouncedAutocompleteRef = useRef(
         debounce((query) => getAutocompleteResults(query), 600)
     );
-    
+
     const handleSuggestionClick = (suggestion) => {
         setLocation(suggestion);
         setSuggestions([]);
@@ -70,7 +78,7 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
             <input
                 type="text"
                 name="event_name"
-                value = {eventName}
+                value={eventName}
                 placeholder="Event Name"
                 className="w-full p-3 mb-3 border border-gray-300 rounded"
                 onChange={(e) => setEventName(e.target.value)}
@@ -92,7 +100,7 @@ export default function CreateEditEvent({ formMode, initialValues = {}, onClose,
                 value={location}
                 onChange={(e) => {
                     setLocation(e.target.value);
-                    if (e.target.value.length >= 3) {debouncedAutocompleteRef.current(e.target.value);}
+                    if (e.target.value.length >= 3) { debouncedAutocompleteRef.current(e.target.value); }
                 }}
                 placeholder="Enter a location"
                 className="w-full p-2 border border-gray-300 rounded"
