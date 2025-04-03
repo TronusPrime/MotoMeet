@@ -138,6 +138,7 @@ export default function EventsPage() {
                             href={`https://www.google.com/maps/search/?api=1&query=${selectedEvent.latitude},${selectedEvent.longitude}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="text-blue-400"
                         >
                             {selectedEvent.location}</a>
                         </p>
